@@ -1,0 +1,76 @@
+import {
+  Controller,
+  Get,
+  Query,
+  Param,
+  Body,
+  Post,
+  Delete,
+  UseGuards,
+  Req,
+  ParseIntPipe,
+} from '@nestjs/common';
+import { VehicleInfoService } from './vehicle_info.service';
+import responeSuccess from '../common/library/respone';
+import { pagination } from 'src/common/library/pagination';
+import { ParamCreate, ParamGet } from './vehicle_info.dto';
+import { RolesGuard } from 'src/auth/roles.guard';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { Roles } from 'src/auth/roles.decorator';
+import { dataConstants, roleConstants } from 'src/auth/constants';
+
+@UseGuards(RolesGuard)
+@UseGuards(JwtAuthGuard)
+@Controller('vehicle-info')
+export class VehicleInfoController {
+  constructor(private vehicleInfoService: VehicleInfoService) {}
+
+  @Roles(roleConstants.oem_admin, roleConstants.master_admin)
+  @Get('/get')
+  async get(@Query() query: ParamGet, @Req() request) {
+    const { user } = request;
+    let param = { ...pagination(query), where: {} };
+    if (user?.type_admin === dataConstants.oem_admin) {
+      param.where = {
+        id_oem: user?.id,
+      };
+    }
+    const responseData = await this.vehicleInfoService.getService(param);
+    return responeSuccess({
+      total: responseData.count,
+      data: responseData.rows,
+    });
+  }
+
+  @Post('/create')
+  @Roles(roleConstants.oem_admin, roleConstants.master_admin)
+  async create(@Body() body: ParamCreate, @Req() request) {
+    const { user } = request;
+    let param = body;
+    if (user?.type_admin === dataConstants.oem_admin) {
+      param.id_oem = user?.id;
+    }
+    const responseData = await this.vehicleInfoService.createService(param);
+    return responeSuccess({
+      data: responseData,
+    });
+  }
+
+  @Post('/update')
+  @Roles(roleConstants.oem_admin, roleConstants.master_admin)
+  async update(@Body() body: ParamCreate) {
+    const responseData = await this.vehicleInfoService.updateService(body);
+    return responeSuccess({
+      data: responseData,
+    });
+  }
+
+  @Delete('/delete/:id')
+  @Roles(roleConstants.oem_admin, roleConstants.master_admin)
+  async delete(@Param('id', new ParseIntPipe()) id: number) {
+    const responseData = await this.vehicleInfoService.deleteService(id);
+    return responeSuccess({
+      data: responseData,
+    });
+  }
+}
