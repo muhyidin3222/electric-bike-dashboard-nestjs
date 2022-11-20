@@ -9,6 +9,7 @@ import cookieParser from 'cookie-parser';
 
 const allowedOrigins = [
   'http://localhost:5173',
+  'http://localhost:8000',
   'http://103.150.89.27:5173',
   'http://103.150.89.27:8000',
   'http://103.150.89.27',
