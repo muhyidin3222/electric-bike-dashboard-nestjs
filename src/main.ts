@@ -7,7 +7,11 @@ import { runInCluster } from './common/library/runInCluster';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 
-const allowedOrigins = ['http://localhost:5173', 'http://103.150.89.27:5173'];
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://103.150.89.27:5173',
+  'http://103.150.89.27',
+];
 
 async function bootstrap() {
   const configService = new ConfigService();
