@@ -6,8 +6,8 @@ import {
   DataType,
   BelongsTo,
 } from 'sequelize-typescript';
-import { literal } from 'sequelize/types';
 import { OemEntity } from 'src/oem/oem.entity';
+import { literal } from 'sequelize';
 
 const { STRING, INTEGER, DATE } = DataType;
 
@@ -61,14 +61,14 @@ export class AdminEntity extends Model {
   @Column({
     allowNull: false,
     type: DATE,
-    // defaultValue: literal('CURRENT_TIMESTAMP'),
+    defaultValue: literal('CURRENT_TIMESTAMP'),
   })
   created_at: Date;
 
   @Column({
     allowNull: false,
     type: DATE,
-    // defaultValue: literal('CURRENT_TIMESTAMP'),
+    defaultValue: literal('CURRENT_TIMESTAMP'),
   })
   updated_at: Date;
 

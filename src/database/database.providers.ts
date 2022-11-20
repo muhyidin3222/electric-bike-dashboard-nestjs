@@ -17,6 +17,7 @@ export const databaseProviders = [
       const sequelize = new Sequelize({
         dialect: 'mysql',
         logging: HOST === 'localhost' ? true : false,
+        // logging: true,
         port: 3306,
         host: HOST,
         username: USERNAME,

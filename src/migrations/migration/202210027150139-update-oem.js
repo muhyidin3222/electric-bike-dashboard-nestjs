@@ -34,16 +34,6 @@ module.exports = {
     await queryInterface.addIndex('oem', ['pic_email']);
     await queryInterface.addIndex('oem', ['name']);
     await queryInterface.addIndex('oem', ['pic_name']);
-
-    await queryInterface.addColumn('oem', 'deletedAt', {
-      allowNull: true,
-      type: Sequelize.DATE
-    });
-    await queryInterface.addColumn('vehicle_info', 'deletedAt', {
-      allowNull: true,
-      type: Sequelize.DATE
-    });
-
   },
   async down(queryInterface, Sequelize) {
   }
