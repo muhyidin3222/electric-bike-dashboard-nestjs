@@ -8,14 +8,14 @@ import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 
 const allowedOrigins = [
-  'http://localhost:5173',
-  'http://localhost:8000',
-  'http://localhost:80',
-  'http://localhost',
-  'http://103.150.89.27:5173',
-  'http://103.150.89.27:8000',
-  'http://103.150.89.27:80',
-  'http://103.150.89.27',
+  'http://localhost:*',
+  // 'http://localhost:8000',
+  // 'http://localhost:80',
+  // 'http://localhost',
+  // 'http://103.150.89.27:5173',
+  // 'http://103.150.89.27:8000',
+  // 'http://103.150.89.27:80',
+  // 'http://103.150.89.27',
 ];
 
 async function bootstrap() {
@@ -26,9 +26,9 @@ async function bootstrap() {
   app.useGlobalFilters(new HttpExceptionFilter());
   app.useGlobalPipes(new JoinValidationPipe());
   app.enableCors({
-    origin: allowedOrigins,
-    credentials: true,
-    optionsSuccessStatus: 200,
+    origin: '*',
+    // credentials: true,
+    // optionsSuccessStatus: 200,
   });
   app.use(cookieParser());
   app.use(
