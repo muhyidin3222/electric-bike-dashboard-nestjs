@@ -11,9 +11,11 @@ const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:8000',
   'http://localhost:80',
+  'http://localhost',
   'http://103.150.89.27:5173',
   'http://103.150.89.27:8000',
   'http://103.150.89.27:80',
+  'http://103.150.89.27',
 ];
 
 async function bootstrap() {
