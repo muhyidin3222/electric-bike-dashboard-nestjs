@@ -19,7 +19,7 @@ export class RolesGuard implements CanActivate {
     );
     // const omeAdmin = roles?.find((val) => val === roleConstants.oem_admin);
 
-    console.log(roles,'roles');
+    // console.log(roles,'roles');
     // console.log(omeAdmin, masterAdmin, user);
 
     if (masterAdmin) {

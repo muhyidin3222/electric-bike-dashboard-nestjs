@@ -49,7 +49,7 @@ export class UserController {
       param.where = {
         ...param.where,
         name: {
-          [Op.like]: `%${query.name}%`,
+          [Op.like]: `${query.name}%`,
         },
       };
     }

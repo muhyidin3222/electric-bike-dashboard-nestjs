@@ -4,6 +4,7 @@ import { VehicleInfoEntity } from 'src/vehicle_info/vehicle_info.entity';
 import { OemEntity } from 'src/oem/oem.entity';
 import { AdminEntity } from 'src/admin/admin.entity';
 import { CallbackEntity } from 'src/callback/callback.entity';
+import { AerisDataEntity } from 'src/callback/aeris-data.entity';
 
 const user_provider = {
   provide: 'USER_REPOSITORY',
@@ -29,11 +30,16 @@ const callback_provider = {
   provide: 'CALLBACKK_REPOSITORY',
   useValue: CallbackEntity,
 };
+const aeris_data_provider = {
+  provide: 'AERIS_DATA_REPOSITORY',
+  useValue: AerisDataEntity,
+};
 export {
   user_provider,
   auths_provider,
   admin_provider,
   vehicle_info_provider,
   oem_provider,
-  callback_provider
+  callback_provider,
+  aeris_data_provider
 };
