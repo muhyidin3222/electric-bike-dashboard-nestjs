@@ -4,6 +4,7 @@ import {
   Post,
   Headers,
   BadRequestException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { CallbackService } from './callback.service';
 import responeSuccess from '../common/library/respone';
@@ -14,14 +15,13 @@ export class CallbackController {
 
   @Post('/create')
   async create(@Body() body: any, @Headers() headers: any) {
-    console.log(headers)
-    if (headers?.api_key == '81f75fe8-5355-4bd7-899b-7be6106a5cee') {
+    if (headers.authorization?.split(' ')[1] == '81f75fe8-5355-4bd7-899b-7be6106a5cee') {
       await this.callbackService.createService(headers, body);
       return responeSuccess({
         data: body,
       });
     } else {
-      throw new BadRequestException('Invalid api key');
+      throw new UnauthorizedException('Invalid token');
     }
   }
 }
