@@ -14,7 +14,8 @@ export class CallbackController {
 
   @Post('/create')
   async create(@Body() body: any, @Headers() headers: any) {
-    if (headers?.api_key === '81f75fe8-5355-4bd7-899b-7be6106a5cee') {
+    console.log(headers)
+    if (headers?.api_key == '81f75fe8-5355-4bd7-899b-7be6106a5cee') {
       await this.callbackService.createService(headers, body);
       return responeSuccess({
         data: body,
