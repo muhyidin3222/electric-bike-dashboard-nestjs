@@ -11,7 +11,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       ignoreExpiration: false,
       secretOrKey: jwtConstants.secret,
       passport: (res) => {
-        console.log(res);
+        // console.log(res);
       },
     });
   }

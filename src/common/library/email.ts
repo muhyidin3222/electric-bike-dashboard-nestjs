@@ -17,13 +17,13 @@ export default async (configEmail) => {
     if (err) {
       console.log(err, "'ERRORR SEND EMAIL TO CLIENT!'");
     } else {
-      console.log(info, 'SUCCESS SEND EMAIL TO CLIENT!');
+      // console.log(info, 'SUCCESS SEND EMAIL TO CLIENT!');
     }
   });
 
   try {
     const resSuccess = await transporter.sendMail(configEmail);
-    console.log(resSuccess, 'SUCCESS SEND EMAIL');
+    // console.log(resSuccess, 'SUCCESS SEND EMAIL');
     return resSuccess;
   } catch (error) {
     console.log(error);
