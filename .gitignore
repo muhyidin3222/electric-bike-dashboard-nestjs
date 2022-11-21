@@ -351,4 +351,4 @@ package-lock.json
 auth_key_apple
 
 files
-src/migrations/config/config.json
+**/**/**/config.json
