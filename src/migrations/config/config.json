@@ -1,12 +1,12 @@
 {
-  "development1": {
+  "development": {
     "username": "root",
     "password": "root",
     "database": "united_tev",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
-  "development": {
+  "development1": {
     "username": "admin",
     "password": "Kurakuraninja1745!",
     "database": "staging_united_tev",

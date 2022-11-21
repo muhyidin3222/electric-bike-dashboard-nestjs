@@ -15,7 +15,7 @@ import { ConfigService } from 'src/common/library/config.service';
 import { OemModule } from 'src/oem/oem.module';
 import { AdminModule } from 'src/admin/admin.module';
 import { UserModule } from 'src/user/user.module';
-import { auths_provider } from 'src/common/provider/master-provider-model';
+import { CallbackModule } from 'src/callback/callback.module';
 
 @Module({
   imports: [
@@ -28,6 +28,7 @@ import { auths_provider } from 'src/common/provider/master-provider-model';
     OemModule,
     AdminModule,
     UserModule,
+    CallbackModule,
     MulterModule.register({
       dest: './files',
     }),

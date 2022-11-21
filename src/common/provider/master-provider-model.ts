@@ -3,6 +3,7 @@ import { UserEntity } from 'src/user/user.entity';
 import { VehicleInfoEntity } from 'src/vehicle_info/vehicle_info.entity';
 import { OemEntity } from 'src/oem/oem.entity';
 import { AdminEntity } from 'src/admin/admin.entity';
+import { CallbackEntity } from 'src/callback/callback.entity';
 
 const user_provider = {
   provide: 'USER_REPOSITORY',
@@ -24,10 +25,15 @@ const oem_provider = {
   provide: 'OEM_REPOSITORY',
   useValue: OemEntity,
 };
+const callback_provider = {
+  provide: 'CALLBACKK_REPOSITORY',
+  useValue: CallbackEntity,
+};
 export {
   user_provider,
   auths_provider,
   admin_provider,
   vehicle_info_provider,
-  oem_provider
+  oem_provider,
+  callback_provider
 };

@@ -1,5 +1,6 @@
 import { Sequelize } from 'sequelize-typescript';
 import { AdminEntity } from 'src/admin/admin.entity';
+import { CallbackEntity } from 'src/callback/callback.entity';
 import { ConfigService } from 'src/common/library/config.service';
 import { OemEntity } from 'src/oem/oem.entity';
 import { UserEntity } from 'src/user/user.entity';
@@ -33,6 +34,7 @@ export const databaseProviders = [
         OemEntity,
         AdminEntity,
         UserEntity,
+        CallbackEntity
       ]);
       // await sequelize.sync();
       return sequelize;
