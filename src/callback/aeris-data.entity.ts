@@ -33,7 +33,7 @@ export class AerisDataEntity extends Model {
   imei: string;
 
   @Column({
-    allowNull: false,
+    allowNull: true,
     type: STRING(150),
   })
   vin: string;
@@ -117,7 +117,7 @@ export class AerisDataEntity extends Model {
   phone_number: string;
 
   @Column({
-    allowNull: false,
+    allowNull: true,
     type: STRING(100),
   })
   email: string;
@@ -129,7 +129,7 @@ export class AerisDataEntity extends Model {
   alerts: string;
 
   @Column({
-    allowNull: false,
+    allowNull: true,
     type: INTEGER,
   })
   asset_id: number;

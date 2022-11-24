@@ -16,6 +16,11 @@ import { OemModule } from 'src/oem/oem.module';
 import { AdminModule } from 'src/admin/admin.module';
 import { UserModule } from 'src/user/user.module';
 import { CallbackModule } from 'src/callback/callback.module';
+import {
+  oem_provider,
+  user_provider,
+  vehicle_info_provider,
+} from 'src/common/provider/master-provider-model';
 
 @Module({
   imports: [
@@ -41,6 +46,9 @@ import { CallbackModule } from 'src/callback/callback.module';
       provide: APP_FILTER,
       useClass: HttpExceptionFilter,
     },
+    oem_provider,
+    user_provider,
+    vehicle_info_provider,
   ],
   exports: [],
 })

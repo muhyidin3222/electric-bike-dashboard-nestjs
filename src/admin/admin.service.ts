@@ -14,6 +14,7 @@ export class AdminService {
   async detailService(param: any): Promise<AdminEntity> {
     const resFindSeller = await this.adminRepository.findOne({
       ...param,
+      attributes: ['id', 'name', 'email', 'type_admin', 'id_oem'],
       include: [
         {
           model: OemEntity,
