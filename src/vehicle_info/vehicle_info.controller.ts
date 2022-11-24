@@ -30,11 +30,12 @@ export class VehicleInfoController {
   async get(@Query() query: ParamGet, @Req() request) {
     const { user } = request;
     let param = { ...pagination(query), where: {} };
-    if (user?.type_admin === dataConstants.oem_admin) {
+    if (user?.type_admin !== 'master_admin') {
       param.where = {
-        id_oem: user?.id,
+        id_oem: user?.id_oem,
       };
     }
+
     const responseData = await this.vehicleInfoService.getService(param);
     return responeSuccess({
       total: responseData.count,
@@ -47,8 +48,8 @@ export class VehicleInfoController {
   async create(@Body() body: ParamCreate, @Req() request) {
     const { user } = request;
     let param = body;
-    if (user?.type_admin === dataConstants.oem_admin) {
-      param.id_oem = user?.id;
+    if (user?.type_admin !== 'master_admin') {
+      param.id_oem = user?.id_oem;
     }
     const responseData = await this.vehicleInfoService.createService(param);
     return responeSuccess({
@@ -67,8 +68,15 @@ export class VehicleInfoController {
 
   @Delete('/delete/:id')
   @Roles(roleConstants.oem_admin, roleConstants.master_admin)
-  async delete(@Param('id', new ParseIntPipe()) id: number) {
-    const responseData = await this.vehicleInfoService.deleteService(id);
+  async delete(@Param('id', new ParseIntPipe()) id: number, @Req() request) {
+    const { user } = request;
+    let where: any = { id };
+    if (user?.type_admin !== 'master_admin') {
+      where.id_oem = user.id_oem;
+    }
+    const responseData = await this.vehicleInfoService.deleteService({
+      where,
+    });
     return responeSuccess({
       data: responseData,
     });

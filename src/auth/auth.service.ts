@@ -9,6 +9,7 @@ import { JwtService } from '@nestjs/jwt';
 import { newId } from 'src/common/library/create-last-id.service';
 import { AdminEntity } from 'src/admin/admin.entity';
 import { admin_provider } from 'src/common/provider/master-provider-model';
+import { OemEntity } from 'src/oem/oem.entity';
 
 @Injectable()
 export class AuthService {
@@ -26,7 +27,7 @@ export class AuthService {
       where: {
         email,
       },
-      attributes: ['id', 'email', 'password', 'name', 'type_admin'],
+      attributes: ['id', 'email', 'password', 'name', 'type_admin', 'id_oem'],
     });
     const userData = dataResponse?.dataValues;
     if (!userData) throw new BadRequestException('Email Not Found');
@@ -36,6 +37,7 @@ export class AuthService {
       id: userData.id,
       sub: userData.id,
       type_admin: userData.type_admin,
+      id_oem: userData?.id_oem,
     };
     const user_token = this.jwtService.sign(payload);
     return {

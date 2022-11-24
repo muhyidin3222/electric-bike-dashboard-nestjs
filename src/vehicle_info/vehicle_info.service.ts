@@ -37,11 +37,9 @@ export class VehicleInfoService {
     return resFindSeller;
   }
 
-  async deleteService(id: number): Promise<VehicleInfoEntity | any> {
+  async deleteService({ where }): Promise<VehicleInfoEntity | any> {
     const resFindSeller = await this.vechicleInfoRepository.destroy({
-      where: {
-        id,
-      },
+      where: where,
     });
     return resFindSeller;
   }

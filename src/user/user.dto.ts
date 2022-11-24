@@ -9,9 +9,6 @@ class dataUser {
   email: string;
 
   @IsString()
-  password: string;
-
-  @IsString()
   phone: string;
 
   @IsString()
@@ -29,7 +26,10 @@ class dataUser {
   id_oem: string;
 }
 
-export class ParamCreate extends dataUser {}
+export class ParamCreate extends dataUser {
+  @IsString()
+  password: string;
+}
 export class ParamUpdate extends dataUser {
   @IsNumber()
   id: number;
@@ -74,4 +74,8 @@ export class ParamGet extends GetParamMasterDto {
   @IsOptional()
   @IsString()
   last_login: string;
+
+  @IsOptional()
+  @IsString()
+  oem: string;
 }

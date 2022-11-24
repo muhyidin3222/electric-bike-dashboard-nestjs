@@ -45,11 +45,9 @@ export class UserService {
     return resFindSeller;
   }
 
-  async deleteService(id: number): Promise<UserEntity | any> {
+  async deleteService({ where }): Promise<UserEntity | any> {
     const resFindSeller = await this.userRepository.destroy({
-      where: {
-        id,
-      },
+      where,
     });
     return resFindSeller;
   }
