@@ -34,7 +34,6 @@ export class AdminController {
       where: {},
       ...pagination(query),
     };
-    console.log(user, 'user');
     if (user?.id_oem && user.type_admin === 'oem_master_admin') {
       param.where = {
         id_oem: user?.id_oem,

@@ -5,6 +5,8 @@ import { OemEntity } from 'src/oem/oem.entity';
 import { AdminEntity } from 'src/admin/admin.entity';
 import { CallbackEntity } from 'src/callback/callback.entity';
 import { AerisDataEntity } from 'src/callback/aeris-data.entity';
+import { LogPageVisitedEntity } from 'src/data_log/log-page-visited.entity';
+import { LogApiCallEntity } from 'src/data_log/log-api-call.entity';
 
 const user_provider = {
   provide: 'USER_REPOSITORY',
@@ -34,6 +36,14 @@ const aeris_data_provider = {
   provide: 'AERIS_DATA_REPOSITORY',
   useValue: AerisDataEntity,
 };
+const log_page_visited_data_provider = {
+  provide: 'LOG_PAGE_VISITED_REPOSITORY',
+  useValue: LogPageVisitedEntity,
+};
+const log_api_call_provider = {
+  provide: 'LOG_API_CALL_REPOSITORY',
+  useValue: LogApiCallEntity,
+};
 export {
   user_provider,
   auths_provider,
@@ -41,5 +51,7 @@ export {
   vehicle_info_provider,
   oem_provider,
   callback_provider,
-  aeris_data_provider
+  aeris_data_provider,
+  log_page_visited_data_provider,
+  log_api_call_provider,
 };

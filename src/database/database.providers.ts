@@ -3,6 +3,8 @@ import { AdminEntity } from 'src/admin/admin.entity';
 import { AerisDataEntity } from 'src/callback/aeris-data.entity';
 import { CallbackEntity } from 'src/callback/callback.entity';
 import { ConfigService } from 'src/common/library/config.service';
+import { LogApiCallEntity } from 'src/data_log/log-api-call.entity';
+import { LogPageVisitedEntity } from 'src/data_log/log-page-visited.entity';
 import { OemEntity } from 'src/oem/oem.entity';
 import { UserEntity } from 'src/user/user.entity';
 import { VehicleInfoEntity } from 'src/vehicle_info/vehicle_info.entity';
@@ -36,7 +38,9 @@ export const databaseProviders = [
         AdminEntity,
         UserEntity,
         CallbackEntity,
-        AerisDataEntity
+        AerisDataEntity,
+        LogPageVisitedEntity,
+        LogApiCallEntity
       ]);
       // await sequelize.sync();
       return sequelize;

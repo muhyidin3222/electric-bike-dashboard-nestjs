@@ -4,6 +4,7 @@ import {
   Get,
   Param,
   Post,
+  Req,
   Res,
   UploadedFile,
   UseInterceptors,
@@ -57,5 +58,11 @@ export class AppController {
   @Get('image/:imgpath')
   seeUploadedFile(@Param('imgpath') image, @Res() res) {
     return res.sendFile(image, { root: './files' });
+  }
+
+  @Get('/home/get')
+  home(@Req() request): any {
+    const { user } = request;
+    return this.appService.homeDashboardChart(user?.id_oem);
   }
 }

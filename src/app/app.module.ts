@@ -17,10 +17,13 @@ import { AdminModule } from 'src/admin/admin.module';
 import { UserModule } from 'src/user/user.module';
 import { CallbackModule } from 'src/callback/callback.module';
 import {
+  log_api_call_provider,
+  log_page_visited_data_provider,
   oem_provider,
   user_provider,
   vehicle_info_provider,
 } from 'src/common/provider/master-provider-model';
+import { DataLogModule } from 'src/data_log/data-log.module';
 
 @Module({
   imports: [
@@ -34,6 +37,7 @@ import {
     AdminModule,
     UserModule,
     CallbackModule,
+    DataLogModule,
     MulterModule.register({
       dest: './files',
     }),
@@ -49,6 +53,8 @@ import {
     oem_provider,
     user_provider,
     vehicle_info_provider,
+    log_api_call_provider,
+    log_page_visited_data_provider
   ],
   exports: [],
 })
