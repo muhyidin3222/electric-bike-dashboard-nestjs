@@ -54,7 +54,7 @@ import { DataLogModule } from 'src/data_log/data-log.module';
     user_provider,
     vehicle_info_provider,
     log_api_call_provider,
-    log_page_visited_data_provider
+    log_page_visited_data_provider,
   ],
   exports: [],
 })

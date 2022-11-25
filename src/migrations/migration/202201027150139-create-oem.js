@@ -30,7 +30,7 @@ module.exports = {
       },
       status_active: {
         allowNull: false,
-        type: Sequelize.STRING(100)
+        type: Sequelize.INTEGER
       },
       created_at: {
         allowNull: false,

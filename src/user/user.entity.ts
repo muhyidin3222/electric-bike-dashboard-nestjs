@@ -88,7 +88,19 @@ export class UserEntity extends Model {
     allowNull: true,
     type: STRING,
   })
+  image: string;
+
+  @Column({
+    allowNull: true,
+    type: STRING,
+  })
   last_activities: string;
+
+  @Column({
+    allowNull: true,
+    type: INTEGER,
+  })
+  count_active: Number;
 
   @Column({
     allowNull: false,

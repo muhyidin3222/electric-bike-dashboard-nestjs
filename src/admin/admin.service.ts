@@ -32,6 +32,7 @@ export class AdminService {
         {
           model: OemEntity,
           attributes: ['id', 'name'],
+          required: false,
         },
       ],
       attributes: ['id', 'name', 'email', 'type_admin', 'created_at'],

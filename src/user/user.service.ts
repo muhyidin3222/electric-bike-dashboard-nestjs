@@ -14,12 +14,6 @@ export class UserService {
   async detailService(param: any): Promise<UserEntity> {
     const resFindSeller = await this.userRepository.findOne({
       ...param,
-      include: [
-        {
-          model: OemEntity,
-          attributes: ['id', 'name'],
-        },
-      ],
     });
     return resFindSeller;
   }

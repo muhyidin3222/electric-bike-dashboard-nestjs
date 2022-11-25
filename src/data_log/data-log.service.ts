@@ -3,7 +3,9 @@ import moment from 'moment';
 import {
   log_page_visited_data_provider,
   oem_provider,
+  user_provider,
 } from 'src/common/provider/master-provider-model';
+import { UserEntity } from 'src/user/user.entity';
 import { LogPageVisitedEntity } from './log-page-visited.entity';
 
 @Injectable()
@@ -11,6 +13,8 @@ export class DataLogService {
   constructor(
     @Inject(log_page_visited_data_provider.provide)
     private logPageVisitedRepository: typeof LogPageVisitedEntity,
+    @Inject(user_provider.provide)
+    private userRepository: typeof UserEntity,
   ) {}
 
   async detailService(param: any): Promise<LogPageVisitedEntity> {
@@ -70,6 +74,20 @@ export class DataLogService {
       date_last_status: moment().format('YYYY-MM-DD HH:mm:ss'),
       status_active: 1,
     });
+    const count_total: any = await this.userRepository.findOne({
+      where: {
+        id: body.id_user,
+      },
+      attributes: ['count_active'],
+    });
+    this.userRepository.update(
+      { count_active: (count_total?.defaultValue?.count_active || 0) + 1 },
+      {
+        where: {
+          id: body.id_user,
+        },
+      },
+    );
     return resFindSeller;
   }
 }

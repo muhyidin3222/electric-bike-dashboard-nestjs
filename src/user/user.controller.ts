@@ -33,6 +33,7 @@ export class UserController {
     const { user } = request;
     let param = { ...pagination(query), where: {} };
     if (user?.type_admin !== 'master_admin') {
+      console.log(user)
       param.where = {
         id_oem: user?.id_oem,
       };
@@ -166,12 +167,14 @@ export class UserController {
         'id_oem',
         'last_login',
         'last_activities',
+        'image',
         'created_at',
       ],
       include: [
         {
           model: OemEntity,
           attributes: ['id', 'name'],
+          require: false,
         },
       ],
     });
