@@ -203,6 +203,44 @@ export class UserController {
     });
   }
 
+  @Get('/customer/detail')
+  @Roles(dataConstants.user)
+  async detailCustomer(
+    @Req() request,
+  ) {
+    const { user } = request;
+    const responseData = await this.userService.detailService({
+      where: {
+        id: user?.id,
+      },
+      attributes: [
+        'id',
+        'name',
+        'email',
+        'phone',
+        'vin',
+        'imei',
+        'odometer',
+        'next_service',
+        'id_oem',
+        'last_login',
+        'last_activities',
+        'image',
+        'created_at',
+      ],
+      include: [
+        {
+          model: OemEntity,
+          attributes: ['id', 'name'],
+          require: false,
+        },
+      ],
+    });
+    return responeSuccess({
+      data: responseData,
+    });
+  }
+
   @Post('/customer/update')
   @Roles(dataConstants.user)
   async updateUser(@Body() body: ParamUpdate, @Req() request) {
