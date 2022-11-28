@@ -17,7 +17,7 @@ import { ParamCreate, ParamGet } from './vehicle_info.dto';
 import { RolesGuard } from 'src/auth/roles.guard';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Roles } from 'src/auth/roles.decorator';
-import { dataConstants, roleConstants } from 'src/auth/constants';
+import { dataConstants } from 'src/auth/constants';
 
 @UseGuards(RolesGuard)
 @UseGuards(JwtAuthGuard)
@@ -25,8 +25,12 @@ import { dataConstants, roleConstants } from 'src/auth/constants';
 export class VehicleInfoController {
   constructor(private vehicleInfoService: VehicleInfoService) {}
 
-  @Roles(roleConstants.oem_admin, roleConstants.master_admin)
   @Get('/get')
+  @Roles(
+    dataConstants.oem_admin,
+    dataConstants.master_admin,
+    dataConstants.oem_master_admin,
+  )
   async get(@Query() query: ParamGet, @Req() request) {
     const { user } = request;
     let param = { ...pagination(query), where: {} };
@@ -44,7 +48,11 @@ export class VehicleInfoController {
   }
 
   @Post('/create')
-  @Roles(roleConstants.oem_admin, roleConstants.master_admin)
+  @Roles(
+    dataConstants.oem_admin,
+    dataConstants.master_admin,
+    dataConstants.oem_master_admin,
+  )
   async create(@Body() body: ParamCreate, @Req() request) {
     const { user } = request;
     let param = body;
@@ -58,7 +66,11 @@ export class VehicleInfoController {
   }
 
   @Post('/update')
-  @Roles(roleConstants.oem_admin, roleConstants.master_admin)
+  @Roles(
+    dataConstants.oem_admin,
+    dataConstants.master_admin,
+    dataConstants.oem_master_admin,
+  )
   async update(@Body() body: ParamCreate) {
     const responseData = await this.vehicleInfoService.updateService(body);
     return responeSuccess({
@@ -67,7 +79,11 @@ export class VehicleInfoController {
   }
 
   @Delete('/delete/:id')
-  @Roles(roleConstants.oem_admin, roleConstants.master_admin)
+  @Roles(
+    dataConstants.oem_admin,
+    dataConstants.master_admin,
+    dataConstants.oem_master_admin,
+  )
   async delete(@Param('id', new ParseIntPipe()) id: number, @Req() request) {
     const { user } = request;
     let where: any = { id };

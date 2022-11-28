@@ -34,12 +34,6 @@ export class LogPageVisitedEntity extends Model {
 
   @Column({
     allowNull: false,
-    type: INTEGER,
-  })
-  id_oem: Number;
-
-  @Column({
-    allowNull: false,
     type: DATE,
     defaultValue: literal('CURRENT_TIMESTAMP'),
   })

@@ -68,12 +68,7 @@ export class DataLogService {
   async createService(
     body: LogPageVisitedEntity | any,
   ): Promise<LogPageVisitedEntity> {
-    const resFindSeller = await this.logPageVisitedRepository.create({
-      ...body,
-      last_status: 'active',
-      date_last_status: moment().format('YYYY-MM-DD HH:mm:ss'),
-      status_active: 1,
-    });
+    const resData = await this.logPageVisitedRepository.create(body);
     const count_total: any = await this.userRepository.findOne({
       where: {
         id: body.id_user,
@@ -88,6 +83,6 @@ export class DataLogService {
         },
       },
     );
-    return resFindSeller;
+    return resData;
   }
 }

@@ -8,14 +8,21 @@ import bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { newId } from 'src/common/library/create-last-id.service';
 import { AdminEntity } from 'src/admin/admin.entity';
-import { admin_provider } from 'src/common/provider/master-provider-model';
+import {
+  admin_provider,
+  user_provider,
+} from 'src/common/provider/master-provider-model';
 import { OemEntity } from 'src/oem/oem.entity';
+import { UserEntity } from 'src/user/user.entity';
+import { dataConstants, roleConstants } from './constants';
 
 @Injectable()
 export class AuthService {
   constructor(
     @Inject(admin_provider.provide)
     private adminUserRepository: typeof AdminEntity,
+    @Inject(user_provider.provide)
+    private userRepository: typeof UserEntity,
     private jwtService: JwtService,
   ) {}
 
@@ -46,6 +53,31 @@ export class AuthService {
       email: userData.email,
       name: userData.name,
       type_admin: userData.type_admin,
+    };
+  }
+
+  async loginCustomerService(userParamBody): Promise<any> {
+    const { email, password } = userParamBody;
+    const dataResponse: any = await this.userRepository.findOne({
+      where: {
+        email,
+      },
+      attributes: ['id', 'email', 'password'],
+    });
+    const userData = dataResponse?.dataValues;
+    if (!userData) throw new BadRequestException('Email Not Found');
+    const isMatch = await bcrypt.compare(password, userData.password);
+    if (!isMatch) throw new BadRequestException('Password Salah');
+    const payload = {
+      id: userData.id,
+      sub: userData.id,
+      type_admin: dataConstants.user,
+    };
+    const user_token = this.jwtService.sign(payload);
+    return {
+      id: userData.id,
+      user_token,
+      email: userData.email,
     };
   }
 

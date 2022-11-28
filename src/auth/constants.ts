@@ -7,10 +7,12 @@ export const roleConstants = {
   master_admin: 'MASTER_ADMIN',
   oem_admin: 'OEM_ADMIN',
   oem_master_admin: 'OEM__MASTER_ADMIN',
+  user: 'USER',
 };
 
 export const dataConstants = {
   master_admin: 'master_admin',
   oem_admin: 'oem_admin',
   oem_master_admin: 'oem_master_admin',
+  user: 'user',
 };

@@ -13,20 +13,25 @@ import {
 import { DataLogService } from './data-log.service';
 import responeSuccess from '../common/library/respone';
 import { pagination } from 'src/common/library/pagination';
-import { ParamCreate, ParamGet, ParamUpdate } from './oem.dto';
+import { ParamCreate, ParamGet, ParamUpdate } from './data-log.dto';
 import { RolesGuard } from 'src/auth/roles.guard';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { roleConstants } from 'src/auth/constants';
+import { dataConstants } from 'src/auth/constants';
 import { Op } from 'sequelize';
+import { Roles } from 'src/auth/roles.decorator';
 
 @Controller('data_log')
 @UseGuards(RolesGuard)
 @UseGuards(JwtAuthGuard)
-// @Roles(roleConstants.seller)
 export class DataLogController {
   constructor(private dataLogService: DataLogService) {}
 
   @Get('/get')
+  @Roles(
+    dataConstants.oem_admin,
+    dataConstants.master_admin,
+    dataConstants.oem_master_admin,
+  )
   async get(@Query() query: ParamGet, @Req() request) {
     let param = {
       ...pagination(query),
@@ -44,14 +49,16 @@ export class DataLogController {
     });
   }
 
-  @Post('/create')
+  @Post('/user/create')
+  @Roles(dataConstants.user)
   async create(@Body() body: ParamCreate, @Req() request) {
+    const { user } = request;
     const responseData = await this.dataLogService.createService({
       ...body,
+      id_user: user.id,
     });
     return responeSuccess({
       data: responseData,
     });
   }
-
 }

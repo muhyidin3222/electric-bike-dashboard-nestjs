@@ -17,17 +17,21 @@ import { ParamCreate, ParamGet, ParamUpdate } from './oem.dto';
 import { RolesGuard } from 'src/auth/roles.guard';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Roles } from 'src/auth/roles.decorator';
-import { roleConstants } from 'src/auth/constants';
+import { dataConstants } from 'src/auth/constants';
 import { Op } from 'sequelize';
 
 @Controller('oem')
 @UseGuards(RolesGuard)
 @UseGuards(JwtAuthGuard)
-// @Roles(roleConstants.seller)
 export class OemController {
   constructor(private oemService: OemService) {}
 
   @Get('/get')
+  @Roles(
+    dataConstants.oem_admin,
+    dataConstants.master_admin,
+    dataConstants.oem_master_admin,
+  )
   async get(@Query() query: ParamGet, @Req() request) {
     let param = {
       ...pagination(query),
@@ -46,6 +50,11 @@ export class OemController {
   }
 
   @Post('/create')
+  @Roles(
+    dataConstants.oem_admin,
+    dataConstants.master_admin,
+    dataConstants.oem_master_admin,
+  )
   async create(@Body() body: ParamCreate, @Req() request) {
     const responseData = await this.oemService.createService({
       ...body,
@@ -56,6 +65,11 @@ export class OemController {
   }
 
   @Post('/update')
+  @Roles(
+    dataConstants.oem_admin,
+    dataConstants.master_admin,
+    dataConstants.oem_master_admin,
+  )
   async update(@Body() body: ParamUpdate) {
     const responseData = await this.oemService.updateService(body);
     return responeSuccess({
@@ -64,6 +78,11 @@ export class OemController {
   }
 
   @Get('/detail/:id')
+  @Roles(
+    dataConstants.oem_admin,
+    dataConstants.master_admin,
+    dataConstants.oem_master_admin,
+  )
   async detail(@Param('id', new ParseIntPipe()) id: number) {
     const responseData = await this.oemService.detailService({
       where: {
@@ -76,6 +95,11 @@ export class OemController {
   }
 
   @Delete('/delete/:id')
+  @Roles(
+    dataConstants.oem_admin,
+    dataConstants.master_admin,
+    dataConstants.oem_master_admin,
+  )
   async delete(@Param('id', new ParseIntPipe()) id: number) {
     const responseData = await this.oemService.deleteService(id);
     return responeSuccess({

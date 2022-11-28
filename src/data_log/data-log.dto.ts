@@ -41,7 +41,10 @@ export class ParamGet extends GetParamMasterDto {
   @IsString()
   name: string;
 }
-export class ParamCreate extends dataOem {}
+export class ParamCreate {
+  @IsString()
+  page: string;
+}
 export class ParamUpdate {
   @IsNumber()
   id: number;

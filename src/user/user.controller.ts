@@ -17,7 +17,7 @@ import { ParamCreate, ParamGet, ParamUpdate } from './user.dto';
 import { RolesGuard } from 'src/auth/roles.guard';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Roles } from 'src/auth/roles.decorator';
-import { roleConstants } from 'src/auth/constants';
+import { dataConstants } from 'src/auth/constants';
 import { OemEntity } from 'src/oem/oem.entity';
 import { Op } from 'sequelize';
 
@@ -28,12 +28,16 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Get('/get')
-  @Roles(roleConstants.oem_admin, roleConstants.master_admin)
+  @Roles(
+    dataConstants.oem_admin,
+    dataConstants.master_admin,
+    dataConstants.oem_master_admin,
+  )
   async get(@Query() query: ParamGet, @Req() request) {
     const { user } = request;
     let param = { ...pagination(query), where: {} };
     if (user?.type_admin !== 'master_admin') {
-      console.log(user)
+      console.log(user);
       param.where = {
         id_oem: user?.id_oem,
       };
@@ -110,7 +114,11 @@ export class UserController {
   }
 
   @Post('/create')
-  @Roles(roleConstants.oem_admin, roleConstants.master_admin)
+  @Roles(
+    dataConstants.oem_admin,
+    dataConstants.master_admin,
+    dataConstants.oem_master_admin,
+  )
   async create(@Body() body: ParamCreate, @Req() request) {
     const { user } = request;
     let param = body;
@@ -124,7 +132,11 @@ export class UserController {
   }
 
   @Post('/update')
-  @Roles(roleConstants.oem_admin, roleConstants.master_admin)
+  @Roles(
+    dataConstants.oem_admin,
+    dataConstants.master_admin,
+    dataConstants.oem_master_admin,
+  )
   async update(@Body() body: ParamUpdate) {
     const responseData = await this.userService.updateService({
       ...body,
@@ -135,7 +147,11 @@ export class UserController {
   }
 
   @Delete('/delete/:id')
-  @Roles(roleConstants.oem_admin, roleConstants.master_admin)
+  @Roles(
+    dataConstants.oem_admin,
+    dataConstants.master_admin,
+    dataConstants.oem_master_admin,
+  )
   async delete(@Param('id', new ParseIntPipe()) id: number, @Req() request) {
     const { user } = request;
     let where: any = { id };
@@ -149,7 +165,11 @@ export class UserController {
   }
 
   @Get('/detail/:id')
-  @Roles(roleConstants.oem_admin, roleConstants.master_admin)
+  @Roles(
+    dataConstants.oem_admin,
+    dataConstants.master_admin,
+    dataConstants.user,
+  )
   async detail(@Param('id', new ParseIntPipe()) id: number) {
     const responseData = await this.userService.detailService({
       where: {
@@ -177,6 +197,19 @@ export class UserController {
           require: false,
         },
       ],
+    });
+    return responeSuccess({
+      data: responseData,
+    });
+  }
+
+  @Post('/customer/update')
+  @Roles(dataConstants.user)
+  async updateUser(@Body() body: ParamUpdate, @Req() request) {
+    const { user } = request;
+    const responseData = await this.userService.updateService({
+      ...body,
+      id: user.id,
     });
     return responeSuccess({
       data: responseData,

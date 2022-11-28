@@ -5,31 +5,41 @@ import {
   BadGatewayException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { roleConstants } from './constants';
+import { dataConstants } from './constants';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
   constructor(private reflector: Reflector) {}
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    // const request = context.switchToHttp().getRequest();
-    // const user = request.user;
+    const request = context.switchToHttp().getRequest();
+    const user = request.user;
     const roles = this.reflector.get<string[]>('roles', context.getHandler());
     const masterAdmin = roles?.find(
-      (val) => val === roleConstants.master_admin,
+      (val) => val === dataConstants.master_admin,
     );
-    // const omeAdmin = roles?.find((val) => val === roleConstants.oem_admin);
+    const omeAdmin = roles?.find((val) => val === dataConstants.oem_admin);
+    const omeMasterAdmin = roles?.find(
+      (val) => val === dataConstants.oem_master_admin,
+    );
+    const userRole = roles?.find((val) => val === dataConstants.user);
 
-    // console.log(roles,'roles');
-    // console.log(omeAdmin, masterAdmin, user);
-
-    if (masterAdmin) {
+    if (masterAdmin && user?.type_admin === dataConstants.master_admin) {
       return true;
     }
 
-    // if (omeAdmin && user?.type_admin !== roleConstants.oem_admin) {
-    //   throw new BadGatewayException('Not Have Access');
-    // }
+    if (omeAdmin && user?.type_admin === dataConstants.oem_admin) {
+      return true;
+    }
 
-    return true;
+    if (omeMasterAdmin && user?.type_admin === dataConstants.oem_master_admin) {
+      return true;
+    }
+
+    console.log(userRole && user?.type_admin, dataConstants.user);
+    if (userRole && user?.type_admin === dataConstants.user) {
+      return true;
+    }
+
+    throw new BadGatewayException('Not Have Access');
   }
 }

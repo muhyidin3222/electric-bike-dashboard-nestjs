@@ -6,6 +6,7 @@ import { ConfigService } from 'src/common/library/config.service';
 import { runInCluster } from './common/library/runInCluster';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
+import crypto from 'crypto';
 
 const allowedOrigins = [
   'http://localhost:*',
@@ -38,6 +39,13 @@ async function bootstrap() {
   );
 
   await app.listen(port);
+
+  let createHmac: any = await crypto
+    .createHmac('sha256', '/rest/auth/token/create')
+    .digest('hex');
+  // const utf8: any = await Buffer.from(createHmac, 'utf8');
+  // const butterUtf8: any = Buffer.from(utf8, 'utf8').toString('hex');
+  console.log(createHmac, 'createHmac');
 }
 
 runInCluster(bootstrap);

@@ -17,7 +17,7 @@ import { pagination } from 'src/common/library/pagination';
 import { ParamCreate, ParamGet } from './admin.dto';
 import { RolesGuard } from 'src/auth/roles.guard';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { dataConstants, roleConstants } from 'src/auth/constants';
+import { dataConstants } from 'src/auth/constants';
 import { Roles } from 'src/auth/roles.decorator';
 
 @Controller('admin')
@@ -27,7 +27,7 @@ export class AdminController {
   constructor(private adminService: AdminService) {}
 
   @Get('/get')
-  @Roles(roleConstants.master_admin, roleConstants.oem_master_admin)
+  @Roles(dataConstants.master_admin, dataConstants.oem_master_admin)
   async get(@Query() query: ParamGet, @Req() request) {
     const { user } = request;
     let param = {
@@ -47,7 +47,7 @@ export class AdminController {
   }
 
   @Post('/create')
-  @Roles(roleConstants.master_admin, roleConstants.oem_master_admin)
+  @Roles(dataConstants.master_admin, dataConstants.oem_master_admin)
   async create(@Body() body: ParamCreate, @Req() request) {
     const { user } = request;
     let param = body;
@@ -70,7 +70,7 @@ export class AdminController {
   }
 
   @Post('/update')
-  @Roles(roleConstants.master_admin, roleConstants.oem_master_admin)
+  @Roles(dataConstants.master_admin, dataConstants.oem_master_admin)
   async update(@Body() body: ParamCreate) {
     const responseData = await this.adminService.updateService(body);
     return responeSuccess({
@@ -79,7 +79,7 @@ export class AdminController {
   }
 
   @Get('/detail/:id')
-  @Roles(roleConstants.master_admin, roleConstants.oem_master_admin)
+  @Roles(dataConstants.master_admin, dataConstants.oem_master_admin)
   async detail(@Param('id', new ParseIntPipe()) id: number) {
     const responseData = await this.adminService.detailService({
       where: {
@@ -92,7 +92,7 @@ export class AdminController {
   }
 
   @Delete('/delete/:id')
-  @Roles(roleConstants.master_admin, roleConstants.oem_master_admin)
+  @Roles(dataConstants.master_admin, dataConstants.oem_master_admin)
   async delete(@Param('id', new ParseIntPipe()) id: number) {
     const responseData = await this.adminService.deleteService(id);
     return responeSuccess({
