@@ -6,6 +6,7 @@ import {
   DataType,
   BelongsTo,
 } from 'sequelize-typescript';
+import { AerisDataEntity } from 'src/callback/aeris-data.entity';
 import { OemEntity } from 'src/oem/oem.entity';
 const { STRING, INTEGER, DATE } = DataType;
 
@@ -43,13 +44,13 @@ export class UserEntity extends Model {
   phone: string;
 
   @Column({
-    allowNull: false,
+    allowNull: true,
     type: STRING,
   })
   password: string;
 
   @Column({
-    allowNull: false,
+    allowNull: true,
     type: STRING,
   })
   vin: string;
@@ -103,6 +104,18 @@ export class UserEntity extends Model {
   count_active: Number;
 
   @Column({
+    allowNull: true,
+    type: INTEGER,
+  })
+  aeris_data_id: Number;
+
+  @Column({
+    allowNull: true,
+    type: INTEGER,
+  })
+  vehicle_info_id: Number;
+
+  @Column({
     allowNull: false,
     type: DATE,
     defaultValue: literal('CURRENT_TIMESTAMP'),
@@ -127,4 +140,10 @@ export class UserEntity extends Model {
     foreignKey: 'id_oem',
   })
   oem: OemEntity;
+
+  @BelongsTo(() => AerisDataEntity, {
+    targetKey: 'id',
+    foreignKey: 'aeris_data_id',
+  })
+  aeris_data: AerisDataEntity;
 }

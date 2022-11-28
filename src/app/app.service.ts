@@ -14,11 +14,6 @@ import { OemEntity } from 'src/oem/oem.entity';
 import { UserEntity } from 'src/user/user.entity';
 import _ from 'lodash';
 
-console.log(
-  moment().subtract(1, 'day').format('DD HH'),
-  moment().subtract(moment().format('HH'), 'hours').format('HH'),
-);
-
 @Injectable()
 export class AppService {
   constructor(

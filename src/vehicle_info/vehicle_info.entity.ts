@@ -32,13 +32,13 @@ export class VehicleInfoEntity extends Model {
   name: string;
 
   @Column({
-    allowNull: false,
+    allowNull: true,
     type: STRING,
   })
   image: string;
 
   @Column({
-    allowNull: false,
+    allowNull: true,
     type: STRING,
   })
   color: string;
@@ -50,7 +50,7 @@ export class VehicleInfoEntity extends Model {
   type: number;
 
   @Column({
-    allowNull: false,
+    allowNull: true,
     type: INTEGER,
   })
   id_oem: number;

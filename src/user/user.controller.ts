@@ -20,6 +20,7 @@ import { Roles } from 'src/auth/roles.decorator';
 import { dataConstants } from 'src/auth/constants';
 import { OemEntity } from 'src/oem/oem.entity';
 import { Op } from 'sequelize';
+import { AerisDataEntity } from 'src/callback/aeris-data.entity';
 
 @Controller('user')
 @UseGuards(RolesGuard)
@@ -37,7 +38,6 @@ export class UserController {
     const { user } = request;
     let param = { ...pagination(query), where: {} };
     if (user?.type_admin !== 'master_admin') {
-      console.log(user);
       param.where = {
         id_oem: user?.id_oem,
       };
@@ -205,11 +205,9 @@ export class UserController {
 
   @Get('/customer/detail')
   @Roles(dataConstants.user)
-  async detailCustomer(
-    @Req() request,
-  ) {
+  async detailCustomer(@Req() request) {
     const { user } = request;
-    const responseData = await this.userService.detailService({
+    const responseData: any = await this.userService.customerDetailService({
       where: {
         id: user?.id,
       },
@@ -222,9 +220,7 @@ export class UserController {
         'imei',
         'odometer',
         'next_service',
-        'id_oem',
         'last_login',
-        'last_activities',
         'image',
         'created_at',
       ],
@@ -234,10 +230,41 @@ export class UserController {
           attributes: ['id', 'name'],
           require: false,
         },
+        {
+          model: AerisDataEntity,
+          require: false,
+        },
       ],
     });
+    const {
+      vehicle_number,
+      lat,
+      lng,
+      last_activation_date,
+      license_expire_date,
+      battery_level_percentage,
+      status,
+      speed,
+      power,
+      service_status,
+      next_status,
+    } = responseData?.dataValues?.aeris_data?.dataValues;
+    delete responseData?.dataValues?.aeris_data;
     return responeSuccess({
-      data: responseData,
+      data: {
+        ...responseData?.dataValues,
+        vehicle_number,
+        lat,
+        lng,
+        last_activation_date,
+        license_expire_date,
+        battery_level_percentage,
+        status,
+        speed,
+        power: power === 'true' ? true : false,
+        service_status,
+        next_status,
+      },
     });
   }
 

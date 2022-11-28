@@ -35,7 +35,6 @@ export class RolesGuard implements CanActivate {
       return true;
     }
 
-    console.log(userRole && user?.type_admin, dataConstants.user);
     if (userRole && user?.type_admin === dataConstants.user) {
       return true;
     }

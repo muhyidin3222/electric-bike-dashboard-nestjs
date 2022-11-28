@@ -18,6 +18,14 @@ export class UserService {
     return resFindSeller;
   }
 
+
+  async customerDetailService(param: any): Promise<UserEntity> {
+    const resFindSeller = await this.userRepository.findOne({
+      ...param,
+    });
+    return resFindSeller;
+  }
+
   async getService(query): Promise<{ rows: UserEntity[]; count: number }> {
     const resFindSeller = await this.userRepository.findAndCountAll({
       ...query,

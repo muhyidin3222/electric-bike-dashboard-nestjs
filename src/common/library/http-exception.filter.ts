@@ -17,7 +17,6 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const request = ctx.getRequest<Request>();
     const status = exception.getStatus();
     const exceptionResponse = exception.getResponse();
-    // console.log(exceptionResponse,"exceptionResponse")
     const responseHttps =
       (exceptionResponse &&
         ((exceptionResponse['response'] &&
@@ -25,7 +24,6 @@ export class HttpExceptionFilter implements ExceptionFilter {
           exceptionResponse['message'])) ||
       null;
     const message = exception?.message || null;
-    // console.log(message, responseHttps, `===> message, responseHttps`);
     const bodyRespone: any = {
       status_code: status,
       timestamp: moment().unix(),

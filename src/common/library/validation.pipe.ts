@@ -13,7 +13,6 @@ import { HttpExceptionFilter } from './http-exception.filter';
 export class JoinValidationPipe implements PipeTransform<any> {
   @UseFilters(HttpExceptionFilter)
   async transform(value: any, { metatype }: ArgumentMetadata) {
-    // console.log("alkjsldkf")
     if (!metatype || !this.toValidate(metatype)) {
       return value;
     }
@@ -25,7 +24,6 @@ export class JoinValidationPipe implements PipeTransform<any> {
       property: itemParam.property,
       status_message: itemParam.constraints,
     }));
-    // console.log(errors)
     if (errors.length > 0) {
       throw new BadRequestException(errors);
     }

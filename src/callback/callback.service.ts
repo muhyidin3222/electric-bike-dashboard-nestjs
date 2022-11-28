@@ -2,7 +2,11 @@ import { Inject, Injectable } from '@nestjs/common';
 import {
   aeris_data_provider,
   callback_provider,
+  user_provider,
+  vehicle_info_provider,
 } from 'src/common/provider/master-provider-model';
+import { UserEntity } from 'src/user/user.entity';
+import { VehicleInfoEntity } from 'src/vehicle_info/vehicle_info.entity';
 import { AerisDataEntity } from './aeris-data.entity';
 import { CallbackEntity } from './callback.entity';
 
@@ -13,6 +17,10 @@ export class CallbackService {
     private callbackRepository: typeof CallbackEntity,
     @Inject(aeris_data_provider.provide)
     private aerisDataRepository: typeof AerisDataEntity,
+    @Inject(user_provider.provide)
+    private userRepository: typeof UserEntity,
+    @Inject(vehicle_info_provider.provide)
+    private vehicleInfoRepository: typeof VehicleInfoEntity,
   ) {}
 
   async createService(headers: any, body: any): Promise<any> {
@@ -43,7 +51,7 @@ export class CallbackService {
           aid,
           id,
         }: any = value;
-        return this.aerisDataRepository.findOrCreate({
+        const resAerisData = await this.aerisDataRepository.findOrCreate({
           where: { id },
           defaults: {
             vehicle_number: vno,
@@ -57,7 +65,7 @@ export class CallbackService {
             status: sts,
             speed: spd,
             odometer: odo,
-            power: pow,
+            power: pow === 'False' ? 'false' : 'true',
             service_status: ss,
             phone_number: phn,
             email: eml,
@@ -66,6 +74,33 @@ export class CallbackService {
             next_service: ns,
           },
         });
+        const resVechileInfo: any =
+          await this.vehicleInfoRepository.findOrCreate({
+            where: {
+              type: vno,
+            },
+            defaults: {
+              type: vno,
+              name: vno,
+            },
+          });
+        await this.userRepository.findOrCreate({
+          where: {
+            aeris_data_id: id,
+          },
+          defaults: {
+            aeris_data_id: id,
+            email: eml,
+            phone: phn,
+            vin: vin,
+            imei: imei,
+            odometer: odo,
+            next_service: ns,
+            last_activities: lad,
+            vehicle_info_id: resVechileInfo[0]?.dataValues?.id,
+          },
+        });
+        return resAerisData;
       }),
     );
     return resCreated;
