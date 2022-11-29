@@ -5,7 +5,10 @@ import { CallbackEntity } from 'src/callback/callback.entity';
 import { ConfigService } from 'src/common/library/config.service';
 import { LogApiCallEntity } from 'src/data_log/log-api-call.entity';
 import { LogPageVisitedEntity } from 'src/data_log/log-page-visited.entity';
+import { DrivingScoringEntity } from 'src/driving_scoring/driving_scoring.entity';
+import { NotificationEntity } from 'src/notification/notification.entity';
 import { OemEntity } from 'src/oem/oem.entity';
+import { TripHistoryEntity } from 'src/trip_history/trip_history.entity';
 import { UserEntity } from 'src/user/user.entity';
 import { VehicleInfoEntity } from 'src/vehicle_info/vehicle_info.entity';
 
@@ -40,7 +43,10 @@ export const databaseProviders = [
         CallbackEntity,
         AerisDataEntity,
         LogPageVisitedEntity,
-        LogApiCallEntity
+        LogApiCallEntity,
+        DrivingScoringEntity,
+        TripHistoryEntity,
+        NotificationEntity
       ]);
       // await sequelize.sync();
       return sequelize;

@@ -24,6 +24,9 @@ import {
   vehicle_info_provider,
 } from 'src/common/provider/master-provider-model';
 import { DataLogModule } from 'src/data_log/data-log.module';
+import { DrivingScoringModule } from 'src/driving_scoring/driving_scoring.module';
+import { TripHistoryModule } from 'src/trip_history/trip_history.module';
+import { NotificationModule } from 'src/notification/notification.module';
 
 @Module({
   imports: [
@@ -38,6 +41,9 @@ import { DataLogModule } from 'src/data_log/data-log.module';
     UserModule,
     CallbackModule,
     DataLogModule,
+    DrivingScoringModule,
+    TripHistoryModule,
+    NotificationModule,
     MulterModule.register({
       dest: './files',
     }),

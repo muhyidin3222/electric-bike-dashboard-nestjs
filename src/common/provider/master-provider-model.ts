@@ -7,6 +7,9 @@ import { CallbackEntity } from 'src/callback/callback.entity';
 import { AerisDataEntity } from 'src/callback/aeris-data.entity';
 import { LogPageVisitedEntity } from 'src/data_log/log-page-visited.entity';
 import { LogApiCallEntity } from 'src/data_log/log-api-call.entity';
+import { DrivingScoringEntity } from 'src/driving_scoring/driving_scoring.entity';
+import { TripHistoryEntity } from 'src/trip_history/trip_history.entity';
+import { NotificationEntity } from 'src/notification/notification.entity';
 
 const user_provider = {
   provide: 'USER_REPOSITORY',
@@ -44,6 +47,18 @@ const log_api_call_provider = {
   provide: 'LOG_API_CALL_REPOSITORY',
   useValue: LogApiCallEntity,
 };
+const driving_scoring_provider = {
+  provide: 'DRIVING_SCORING_REPOSITORY',
+  useValue: DrivingScoringEntity,
+};
+const trip_history_provider = {
+  provide: 'TRIP_HISTORY_REPOSITORY',
+  useValue: TripHistoryEntity,
+};
+const notification_provider = {
+  provide: 'NOTIFICATION_REPOSITORY',
+  useValue: NotificationEntity,
+};
 export {
   user_provider,
   auths_provider,
@@ -54,4 +69,7 @@ export {
   aeris_data_provider,
   log_page_visited_data_provider,
   log_api_call_provider,
+  driving_scoring_provider,
+  trip_history_provider,
+  notification_provider
 };
