@@ -222,6 +222,9 @@ export class UserController {
         'next_service',
         'last_login',
         'image',
+        'gender',
+        'birth',
+        'location',
         'created_at',
       ],
       include: [

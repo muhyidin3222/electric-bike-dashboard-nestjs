@@ -99,6 +99,24 @@ export class UserEntity extends Model {
 
   @Column({
     allowNull: true,
+    type: STRING,
+  })
+  location: string;
+
+  @Column({
+    allowNull: true,
+    type: STRING,
+  })
+  gender: string;
+
+  @Column({
+    allowNull: true,
+    type: STRING,
+  })
+  birth: string;
+
+  @Column({
+    allowNull: true,
     type: INTEGER,
   })
   count_active: Number;
