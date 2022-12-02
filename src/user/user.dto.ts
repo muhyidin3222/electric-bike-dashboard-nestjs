@@ -34,6 +34,10 @@ export class ParamUpdate extends dataUser {
   @IsNumber()
   id: number;
 }
+export class ParamCustomerUpdate {
+  @IsNumber()
+  id: number;
+}
 export class ParamGet extends GetParamMasterDto {
   @IsOptional()
   @IsString()

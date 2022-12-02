@@ -273,7 +273,7 @@ export class UserController {
 
   @Post('/customer/update')
   @Roles(dataConstants.user)
-  async updateUser(@Body() body: ParamUpdate, @Req() request) {
+  async updateUser(@Body() body: any, @Req() request) {
     const { user } = request;
     const responseData = await this.userService.updateService({
       ...body,
