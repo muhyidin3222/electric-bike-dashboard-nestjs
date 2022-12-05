@@ -7,6 +7,7 @@ import {
   Req,
   Res,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { Throttle } from '@nestjs/throttler';
@@ -16,6 +17,10 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { editFileName, imageFileFilter } from '../common/library/image';
 import { ConfigService } from 'src/common/library/config.service';
+import { Roles } from 'src/auth/roles.decorator';
+import { dataConstants } from 'src/auth/constants';
+import { RolesGuard } from 'src/auth/roles.guard';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('/')
 export class AppController {
@@ -35,6 +40,14 @@ export class AppController {
     return 'sucess';
   }
 
+  @Roles(
+    dataConstants.oem_admin,
+    dataConstants.master_admin,
+    dataConstants.oem_master_admin,
+    dataConstants.user,
+  )
+  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard)
   @Post('/upload_image')
   @UseInterceptors(
     FileInterceptor('image', {
@@ -49,8 +62,8 @@ export class AppController {
     const URL_API = this.configService.get('URL_API');
     const response = {
       originalname: file.originalname,
-      filename: file.filename,
-      url: `${URL_API}/image/${file.filename}`,
+      filename: file.filename.replace(/\s/g, ''),
+      url: `${URL_API}/image/${file.filename.replace(/\s/g, '')}`,
     };
     return response;
   }
