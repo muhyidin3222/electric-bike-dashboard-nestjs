@@ -1,11 +1,13 @@
 import { Inject, Injectable } from '@nestjs/common';
 import moment from 'moment';
 import {
+  log_api_call_provider,
   log_page_visited_data_provider,
   oem_provider,
   user_provider,
 } from 'src/common/provider/master-provider-model';
 import { UserEntity } from 'src/user/user.entity';
+import { LogApiCallEntity } from './log-api-call.entity';
 import { LogPageVisitedEntity } from './log-page-visited.entity';
 
 @Injectable()
@@ -15,6 +17,8 @@ export class DataLogService {
     private logPageVisitedRepository: typeof LogPageVisitedEntity,
     @Inject(user_provider.provide)
     private userRepository: typeof UserEntity,
+    @Inject(log_api_call_provider.provide)
+    private logApiRepository: typeof LogApiCallEntity,
   ) {}
 
   async detailService(param: any): Promise<LogPageVisitedEntity> {
@@ -84,5 +88,10 @@ export class DataLogService {
       },
     );
     return resData;
+  }
+
+  async createdLogApiService(param: any): Promise<LogApiCallEntity> {
+    const resCreated = await this.logApiRepository.create(param);
+    return resCreated;
   }
 }

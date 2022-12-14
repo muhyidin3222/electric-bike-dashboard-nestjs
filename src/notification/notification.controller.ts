@@ -9,6 +9,7 @@ import {
   UseGuards,
   Req,
   ParseIntPipe,
+  Inject,
 } from '@nestjs/common';
 import { NotificationService } from './notification.service';
 import responeSuccess from '../common/library/respone';
@@ -18,12 +19,18 @@ import { RolesGuard } from 'src/auth/roles.guard';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Roles } from 'src/auth/roles.decorator';
 import { dataConstants } from 'src/auth/constants';
+import { log_api_call_provider } from 'src/common/provider/master-provider-model';
+import { LogApiCallEntity } from 'src/data_log/log-api-call.entity';
 
 @UseGuards(RolesGuard)
 @UseGuards(JwtAuthGuard)
 @Controller('notification')
 export class NotificationController {
-  constructor(private notificationService: NotificationService) {}
+  constructor(
+    private notificationService: NotificationService,
+    @Inject(log_api_call_provider.provide)
+    private logApiRepository: typeof LogApiCallEntity,
+  ) {}
 
   @Get('/customer/get')
   @Roles(dataConstants.user)
@@ -36,6 +43,11 @@ export class NotificationController {
       },
     };
     const responseData = await this.notificationService.getService(param);
+    this.logApiRepository.create({
+      method: 'GET',
+      url: '/notification/customer/get',
+      id_user: user?.id,
+    });
     return responeSuccess({
       total: responseData.count,
       data: responseData.rows,

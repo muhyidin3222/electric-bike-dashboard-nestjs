@@ -39,7 +39,7 @@ export class LogApiCallEntity extends Model {
   id_user: Number;
 
   @Column({
-    allowNull: false,
+    allowNull: true,
     type: INTEGER,
   })
   id_oem: Number;

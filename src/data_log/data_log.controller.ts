@@ -9,6 +9,7 @@ import {
   UseGuards,
   Req,
   ParseIntPipe,
+  Inject,
 } from '@nestjs/common';
 import { DataLogService } from './data-log.service';
 import responeSuccess from '../common/library/respone';
@@ -24,7 +25,9 @@ import { Roles } from 'src/auth/roles.decorator';
 @UseGuards(RolesGuard)
 @UseGuards(JwtAuthGuard)
 export class DataLogController {
-  constructor(private dataLogService: DataLogService) {}
+  constructor(
+    private dataLogService: DataLogService,
+  ) {}
 
   @Get('/get')
   @Roles(
