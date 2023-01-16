@@ -44,9 +44,6 @@ import { NotificationModule } from 'src/notification/notification.module';
     DrivingScoringModule,
     TripHistoryModule,
     NotificationModule,
-    MulterModule.register({
-      dest: './files',
-    }),
   ],
   controllers: [AppController],
   providers: [
